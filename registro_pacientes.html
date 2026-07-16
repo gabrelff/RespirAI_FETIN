@@ -15,11 +15,140 @@
     </div>
     
     <div class="main-content">
-        <div class="header">
-            <h1>Registro de Pacientes</h1>
-            <p>Cadastro e gerenciamento de pacientes</p>
+        <div class="header-container">
+            <div class="header">
+                <h1>Registro de Pacientes</h1>
+                <p>Cadastro e gerenciamento de pacientes</p>
+            </div>
+            <button class="btn-primary" id="btn-abrir-aba">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus-icon lucide-plus"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                Cadastrar Paciente
+            </button>
+        </div>
+
+        <div class="table-container">
+            <div class="search-bar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-round-search-icon lucide-user-round-search"><circle cx="10" cy="8" r="5"/><path d="M2 21a8 8 0 0 1 10.434-7.62"/><circle cx="18" cy="18" r="3"/><path d="m22 22-1.9-1.9"/></svg>
+                <input type="text" placeholder="Buscar por nome...">
+            </div>
+
+            <table class="patients-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>PACIENTE</th>
+                        <th>CADASTRO</th>
+                        <th>NÍVEL DE RISCO</th>
+                        <th>ESCORE</th>
+                        <th>AÇÃO</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#0001</td>
+                        <td>
+                            <div class="patient-info">
+                                <span class="patient-name">Chen, Margaret</span>
+                                <span class="patient-email">mchen@clinic.org</span>
+                            </div>
+                        </td>
+                        <td>30/05/2026</td>
+                        <td><span class="badge badge-critical">CRITICAL</span></td>
+                        <td><span class="score critical">87%</span></td>
+                        <td><button class="btn-action">→</button></td>
+                    </tr>
+                    <tr>
+                        <td>#0002</td>
+                        <td>
+                            <div class="patient-info">
+                                <span class="patient-name">Kowalski, James</span>
+                                <span class="patient-email">jkowalski@clinic.org</span>
+                            </div>
+                        </td>
+                        <td>30/05/2026</td>
+                        <td><span class="badge badge-high">HIGH</span></td>
+                        <td><span class="score high">58%</span></td>
+                        <td><button class="btn-action">→</button></td>
+                    </tr>
+                    <tr>
+                        <td>#0003</td>
+                        <td>
+                            <div class="patient-info">
+                                <span class="patient-name">Okafor, Sandra</span>
+                                <span class="patient-email">sokafor@clinic.org</span>
+                            </div>
+                        </td>
+                        <td>30/05/2026</td>
+                        <td><span class="badge badge-low">LOW</span></td>
+                        <td><span class="score">15%</span></td>
+                        <td><button class="btn-action">→</button></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
+    <div class="overlay" id="overlay"></div>
 
+    <div class="side-panel" id="painel-cadastro">
+        <div class="panel-header">
+            <div>
+                <h2>Cadastrar Novo Paciente</h2>
+                <p>Preencha os dados demográficos e o histórico clínico.</p>
+            </div>
+            <button class="btn-close" id="btn-fechar-aba">&times;</button>
+        </div>
+
+        <form class="panel-form">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>NOME</label>
+                    <input type="text" placeholder="Maria">
+                </div>
+                <div class="form-group">
+                    <label>SOBRENOME</label>
+                    <input type="text" placeholder="Silva">
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>DATA DE NASCIMENTO</label>
+                    <input type="date">
+                </div>
+                <div class="form-group">
+                    <label>SEXO</label>
+                    <select>
+                        <option>Feminino</option>
+                        <option>Masculino</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>OCUPAÇÃO / EXPOSIÇÕES</label>
+                <input type="text" placeholder="Ex: Mineiro, Trabalhador de escritório">
+            </div>
+
+            <button type="button" class="btn-primary full-width" style="margin-top: 30px;">Cadastrar Paciente</button>
+        </form>
+    </div>
+
+    <script>
+        const btnAbrir = document.getElementById('btn-abrir-aba');
+        const btnFechar = document.getElementById('btn-fechar-aba');
+        const painel = document.getElementById('painel-cadastro');
+        const overlay = document.getElementById('overlay');
+
+        // Função que liga/desliga a classe 'open'
+        function alternarAba() {
+            painel.classList.toggle('open');
+            overlay.classList.toggle('open');
+        }
+
+        // Quando clicar nos botões ou no fundo escuro, executa a função
+        btnAbrir.addEventListener('click', alternarAba);
+        btnFechar.addEventListener('click', alternarAba);
+        overlay.addEventListener('click', alternarAba);
+    </script>
 </body>
 </html>

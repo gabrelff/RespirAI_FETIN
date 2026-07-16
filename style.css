@@ -22,8 +22,13 @@ body {
 .logo {
     font-size: 28px;
     font-weight: bold;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     letter-spacing: 1px;
+    border-bottom: 1px solid #1a233a;
+    padding-bottom: 20px;
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-left: 30px;
 }
 
 .menu-link {
@@ -108,4 +113,220 @@ body {
     font-size: 38px;
     font-weight: 700;
     margin-top: 10px;
+}
+/* novo */
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.btn-primary {
+    background-color: #ffffff;
+    color: #0b0f19;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-primary:hover {
+    background-color: #e2e8f0;
+}
+
+.table-container {
+    background-color: #0f172a;
+    border: 1px solid #1e293b;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    background-color: #0b0f19;
+    border: 1px solid #1e293b;
+    border-radius: 6px;
+    padding: 8px 15px;
+    margin-bottom: 20px;
+    width: 300px;
+}
+
+.search-bar input {
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    margin-left: 10px;
+    outline: none;
+    width: 100%;
+}
+
+.patients-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.patients-table th {
+    text-align: left;
+    color: #6a7b95;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 15px 10px;
+    border-bottom: 1px solid #1e293b;
+}
+
+.patients-table td {
+    padding: 15px 10px;
+    border-bottom: 1px solid #1e293b;
+    font-size: 14px;
+}
+
+.patient-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.patient-name {
+    font-weight: 600;
+}
+
+.patient-email {
+    font-size: 12px;
+    color: #6a7b95;
+}
+
+.btn-action {
+    background: transparent;
+    border: none;
+    color: #6a7b95;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+/* Badges de Risco */
+.badge {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
+    border: 1px solid transparent;
+}
+.badge-critical { color: #ef4444; background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.2); }
+.badge-high { color: #f97316; background: rgba(249, 115, 22, 0.1); border-color: rgba(249, 115, 22, 0.2); }
+.badge-low { color: #10b981; background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.2); }
+
+.score { font-weight: bold; }
+.score.critical { color: #ef4444; }
+.score.high { color: #f97316; }
+
+/* =========================================
+   ESTILOS DA ABA LATERAL (SLIDE PANEL)
+========================================= */
+
+/* Fundo escuro */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 998;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+.overlay.open {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* A Aba em si */
+.side-panel {
+    position: fixed;
+    top: 0;
+    right: -500px; /* Esconde a aba fora da tela */
+    width: 400px;
+    height: 100vh;
+    background-color: #0f172a;
+    border-left: 1px solid #1e293b;
+    z-index: 999;
+    padding: 30px;
+    transition: right 0.3s ease; /* Faz o efeito de deslizar */
+    box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+    overflow-y: auto;
+}
+.side-panel.open {
+    right: 0; /* Puxa a aba para dentro da tela */
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 40px;
+}
+
+.panel-header h2 { font-size: 20px; margin-bottom: 5px; }
+.panel-header p { font-size: 11px; color: #6a7b95; text-transform: uppercase; }
+
+.btn-close {
+    background: transparent;
+    border: 1px solid #1e293b;
+    color: #fff;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Formulário da Aba */
+.form-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    font-size: 11px;
+    color: #6a7b95;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.form-group input, .form-group select {
+    background-color: #0b0f19;
+    border: 1px solid #1e293b;
+    color: #fff;
+    padding: 12px;
+    border-radius: 6px;
+    outline: none;
+}
+
+.form-group input:focus, .form-group select:focus {
+    border-color: #8fa0dd;
+}
+
+.full-width {
+    width: 100%;
 }
