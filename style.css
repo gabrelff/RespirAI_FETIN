@@ -1,3 +1,4 @@
+/*CONFIG GERAL*/
 *{
     margin: 0;
     padding: 0;
@@ -5,6 +6,7 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+/* PRIMEIRA PAGINA PRINCIPAL */
 body {
     display: flex;
     background-color: #0b0f19;
@@ -32,14 +34,14 @@ body {
 }
 
 .menu-link {
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 10px;
     color: #8fa0dd;
     text-decoration: none;
-    margin-bottom: 20px;
     font-size: 16px;
     padding: 8px 12px;
     border-radius: 6px;
-    transition: background 0.2s;
 }
 
 .main-content {
@@ -96,11 +98,6 @@ body {
     align-items: center;
 }
 
-/*.card-icon {
-    font-size: 18px;
-    opacity: 0.7;
-}*/
-
 .card-title {
     font-size: 11px;
     color: #94a3b8;
@@ -114,7 +111,9 @@ body {
     font-weight: 700;
     margin-top: 10px;
 }
-/* novo */
+
+/* SEGUDA PAGINA */
+
 .header-container {
     display: flex;
     justify-content: space-between;
@@ -223,16 +222,13 @@ body {
 .badge-critical { color: #ef4444; background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.2); }
 .badge-high { color: #f97316; background: rgba(249, 115, 22, 0.1); border-color: rgba(249, 115, 22, 0.2); }
 .badge-low { color: #10b981; background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.2); }
+.badge-pendente { color: #94a3b8; background: rgba(148, 163, 184, 0.1); border-color: rgba(148, 163, 184, 0.2); }
 
 .score { font-weight: bold; }
 .score.critical { color: #ef4444; }
 .score.high { color: #f97316; }
 
-/* =========================================
-   ESTILOS DA ABA LATERAL (SLIDE PANEL)
-========================================= */
-
-/* Fundo escuro */
+/* ABA LATERAL DE CADASTRO */
 .overlay {
     position: fixed;
     top: 0;
@@ -250,7 +246,7 @@ body {
     pointer-events: all;
 }
 
-/* A Aba em si */
+/* A ABA EM SI */
 .side-panel {
     position: fixed;
     top: 0;

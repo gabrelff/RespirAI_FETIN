@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,8 +10,8 @@
 
     <div class="sidebar">
         <div class="logo">RespirAI</div>
-        <a href="index.html" class="menu-link">Painel Clínico</a>
-        <a href="registro_pacientes.html" class="menu-link">Registro de Pacientes</a>
+        <a href="index.html" class="menu-link"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-panel-left-open-icon lucide-panel-left-open"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/><path d="m14 9 3 3-3 3"/></svg> Painel Clínico</a>
+        <a href="registro_pacientes.html" class="menu-link"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-menu-icon lucide-square-menu"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 8h10"/><path d="M7 12h10"/><path d="M7 16h10"/></svg> Registro de Pacientes</a>
     </div>
     
     <div class="main-content">
@@ -37,65 +37,30 @@
                     <tr>
                         <th>ID</th>
                         <th>PACIENTE</th>
-                        <th>CADASTRO</th>
+                        <th>DATA DO CADASTRO</th>
                         <th>NÍVEL DE RISCO</th>
-                        <th>ESCORE</th>
+                        <th>SCORE</th>
                         <th>AÇÃO</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>#0001</td>
-                        <td>
-                            <div class="patient-info">
-                                <span class="patient-name">Gabriel Fonseca</span>
-                                <span class="patient-email">gabriel@qualquer.com</span>
-                            </div>
-                        </td>
-                        <td>30/05/2026</td>
-                        <td><span class="badge badge-critical">CRITICAL</span></td>
-                        <td><span class="score critical">87%</span></td>
-                        <td><button class="btn-action">→</button></td>
-                    </tr>
-                    <tr>
-                        <td>#0002</td>
-                        <td>
-                            <div class="patient-info">
-                                <span class="patient-name">Sara Ferraz</span>
-                                <span class="patient-email">sara@qualquer.com</span>
-                            </div>
-                        </td>
-                        <td>30/05/2026</td>
-                        <td><span class="badge badge-high">HIGH</span></td>
-                        <td><span class="score high">58%</span></td>
-                        <td><button class="btn-action">→</button></td>
-                    </tr>
-                    <tr>
-                        <td>#0003</td>
-                        <td>
-                            <div class="patient-info">
-                                <span class="patient-name">Maria Luiza</span>
-                                <span class="patient-email">maria.luiza@qualquer.com</span>
-                            </div>
-                        </td>
-                        <td>30/05/2026</td>
-                        <td><span class="badge badge-low">LOW</span></td>
-                        <td><span class="score">15%</span></td>
-                        <td><button class="btn-action">→</button></td>
-                    </tr>
+                <tbody id="patients-table-js">
+
                 </tbody>
             </table>
         </div>
     </div>
+
     <div class="overlay" id="overlay"></div>
 
     <div class="side-panel" id="painel-cadastro">
         <div class="panel-header">
             <div>
                 <h2>Cadastrar Novo Paciente</h2>
-                <p>Preencha os dados demográficos e o histórico clínico.</p>
+                <p>Preencha os dados e o histórico clínico.</p>
             </div>
-            <button class="btn-close" id="btn-fechar-aba">&times;</button>
+            <button class="btn-close" id="btn-fechar-aba">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+            </button>
         </div>
 
         <form class="panel-form">
@@ -133,22 +98,7 @@
         </form>
     </div>
 
-    <script>
-        const btnAbrir = document.getElementById('btn-abrir-aba');
-        const btnFechar = document.getElementById('btn-fechar-aba');
-        const painel = document.getElementById('painel-cadastro');
-        const overlay = document.getElementById('overlay');
+    <script src="script.js"></script>
 
-        // Função que liga/desliga a classe 'open'
-        function alternarAba() {
-            painel.classList.toggle('open');
-            overlay.classList.toggle('open');
-        }
-
-        // Quando clicar nos botões ou no fundo escuro, executa a função
-        btnAbrir.addEventListener('click', alternarAba);
-        btnFechar.addEventListener('click', alternarAba);
-        overlay.addEventListener('click', alternarAba);
-    </script>
 </body>
 </html>
