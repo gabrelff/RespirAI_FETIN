@@ -1,2 +1,2 @@
 # RespirAI_FETIN
-Projeto da Feira de Tecnologia do Inatel.
+Projeto da FETIN 2026 (Feira Tecnológica do Inatel).
