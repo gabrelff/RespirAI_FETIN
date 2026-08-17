@@ -1,79 +1,75 @@
-const pacientes = [
-    {
-        id: "0001",
-        nome: "Gabriel Fonseca",
-        idade: "29",
-        email: "gabriel@qualquer.com",
-        data: "30/05/2026",
-        risco: "CRITICO",
-        score: 87
+const contexto = document.getElementById('graficoSinal').getContext('2d');
+
+// Arrays (listas) que vão guardar os dados do gráfico
+const labelsTempo = [];
+const dadosFluxo = [];
+
+// Configurando como o gráfico deve se parecer
+const chartMestre = new Chart(contexto, {
+    type: 'line',
+    data: {
+        labels: labelsTempo,
+        datasets: [{
+            label: 'Intensidade Respiratória',
+            data: dadosFluxo,
+            borderColor: '#3498db', // Cor da linha azul
+            backgroundColor: 'rgba(52, 152, 219, 0.1)', // Preenchimento suave abaixo da linha
+            borderWidth: 3,
+            tension: 0.4, // Deixa a linha arredondada (suave) em vez de pontiaguda
+            pointRadius: 0, // Esconde as "bolinhas" nos pontos de dados (melhor para visual de monitor)
+            fill: true
+        }]
     },
-    {
-        id: "0002",
-        nome: "Sara Ferraz",
-        idade: "21",
-        email: "sara@qualquer.com",
-        data: "30/05/2026",
-        risco: "ALTO",
-        score: 58
-    },
-    {
-        id: "0003",
-        nome:"Maria Luiza",
-        idade: "21",
-        email:"maria.luiza@qualquer.com",
-        data: "30/05/2026",
-        risco: "BAIXO",
-        score: 15
-    },
-    {
-        id: "0004",
-        nome: "Gabriel Chara",
-        idade: "21",
-        email: "gabrielchara@qualquer.com",
-        data: "02/06/2026",
-        risco: "MÉDIO",
-        score: 35
-    },
-];
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: false, // Importante: desligar a animação padrão para atualizações rápidas fluírem bem
+        scales: {
+            y: {
+                min: 0,
+                max: 100, // Escala de 0 a 100 (você vai ajustar depois conforme o sensor do ESP32)
+                grid: { color: '#f0f0f0' }
+            },
+            x: {
+                display: false // Esconde os textos do eixo X para focar só na onda
+            }
+        },
+        plugins: {
+            legend: { display: false } // Esconde a legenda para ganhar espaço
+        }
+    }
+});
 
-const tbody = document.getElementById('patients-table-js');
+// ==========================================
+// SIMULAÇÃO DO ESP32 (Dados Falsos)
+// ==========================================
+let tempoSimulado = 0;
 
-function renderizarTabela() {
-    tbody.innerHTML = '';
+// A função setInterval executa um bloco de código repetidamente (neste caso, a cada 200 milissegundos)
+setInterval(() => {
+            
+    // 1. Criando um dado falso parecido com respiração (uma onda senoidal matemática)
+    const onda = Math.sin(tempoSimulado) * 35; // Altura da onda
+    const ruido = Math.random() * 5; // Simula a imperfeição de um sensor real
+    const leituraFalsa = Math.round(50 + onda + ruido); 
 
-    pacientes.forEach(paciente => {
-        
-        const classeRisco = paciente.risco.toLowerCase(); 
-        const linha = `
-            <tr>
-                <td>${paciente.id}</td>
-                <td>
-                    <div class="patient-info">
-                        <span class="patient-name">${paciente.nome} (${paciente.idade} anos)</span>
-                    </div>
-                </td>
-                <td>${paciente.data}</td>
-                <td><span class="badge badge-${classeRisco}">${paciente.risco}</span></td>
-                <td><span class="score ${classeRisco}">${paciente.score}%</span></td>
-                <td><button class="btn-action"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-arrow-right-enter-icon lucide-square-arrow-right-enter"><path d="m10 16 4-4-4-4"/><path d="M3 12h11"/><path d="M3 8V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3"/></svg></button></td>
-            </tr>
-        `;
-        tbody.innerHTML += linha;
-    });
-}
-renderizarTabela();
+    // 2. Colocando o dado novo dentro do gráfico
+    labelsTempo.push('');
+    dadosFluxo.push(leituraFalsa);
 
-const btnAbrir = document.getElementById('btn-abrir-aba');
-const btnFechar = document.getElementById('btn-fechar-aba');
-const painel = document.getElementById('painel-cadastro');
-const overlay = document.getElementById('overlay');
+    // 3. Efeito "Monitor de UTI": se passar de 100 pontos, removemos o mais velho
+    // Isso faz o gráfico deslizar para a esquerda
+    if (dadosFluxo.length > 100) {
+        labelsTempo.shift(); // Remove o primeiro item do array de tempo
+        dadosFluxo.shift();  // Remove o primeiro item do array de dados
+    }
 
-function alternarAba() {
-    painel.classList.toggle('open');
-    overlay.classList.toggle('open');
-}
+    // 4. Mandamos o Chart.js atualizar a tela com os novos dados
+    chartMestre.update();
+    
+    // 5. Atualizando o cartão de RPM falso (um número aleatório entre 14 e 18)
+    document.getElementById('displayRpm').innerText = Math.floor(Math.random() * 5) + 14;
 
-btnAbrir.addEventListener('click', alternarAba);
-btnFechar.addEventListener('click', alternarAba);
-overlay.addEventListener('click', alternarAba);
+    tempoSimulado += 0.15; // Avança o tempo para a onda continuar desenhando
+
+}, 200); // 200ms significa que o gráfico recebe 5 dados por segundo
