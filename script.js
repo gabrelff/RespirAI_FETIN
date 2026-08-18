@@ -14,11 +14,11 @@ let isMicrocontrollerOnline = true;
  */
 function setMicrocontrollerStatus(online, options = {}) {
     isMicrocontrollerOnline = !!online;
-    
+
     const badge = document.getElementById('mcu-badge');
     const textElem = document.getElementById('mcu-status-text');
     const dotElem = document.getElementById('mcu-dot');
-    
+
     if (!badge || !textElem) return;
 
     const deviceName = options.device || 'ESP32';
@@ -91,7 +91,7 @@ if (canvasElement) {
                 y: {
                     min: 0,
                     max: 100,
-                    grid: { 
+                    grid: {
                         color: 'rgba(255, 255, 255, 0.05)',
                         drawBorder: false
                     },
@@ -150,31 +150,4 @@ if (canvasElement) {
         }
 
     }, 150);
-}
-
-
-// ==========================================================================
-// 3. CONTROLE DO PAINEL LATERAL DE CADASTRO (REGISTRO DE PACIENTES)
-// ==========================================================================
-function initPatientPanel() {
-    const btnAbrir = document.getElementById('btn-abrir-aba');
-    const btnFechar = document.getElementById('btn-fechar-aba');
-    const painel = document.getElementById('painel-cadastro');
-    const overlay = document.getElementById('overlay');
-
-    if (btnAbrir && painel && overlay) {
-        const abrirPainel = () => {
-            painel.classList.add('active');
-            overlay.classList.add('active');
-        };
-
-        const fecharPainel = () => {
-            painel.classList.remove('active');
-            overlay.classList.remove('active');
-        };
-
-        btnAbrir.addEventListener('click', abrirPainel);
-        if (btnFechar) btnFechar.addEventListener('click', fecharPainel);
-        overlay.addEventListener('click', fecharPainel);
-    }
 }
