@@ -1,75 +1,180 @@
-const contexto = document.getElementById('graficoSinal').getContext('2d');
+/**
+ * RespirAI - Controle do Sistema & Status do Microcontrolador
+ */
 
-// Arrays (listas) que vão guardar os dados do gráfico
-const labelsTempo = [];
-const dadosFluxo = [];
+// ==========================================================================
+// 1. GERENCIAMENTO DE STATUS DO MICROCONTROLADOR (ONLINE / OFFLINE)
+// ==========================================================================
+let isMicrocontrollerOnline = true;
 
-// Configurando como o gráfico deve se parecer
-const chartMestre = new Chart(contexto, {
-    type: 'line',
-    data: {
-        labels: labelsTempo,
-        datasets: [{
-            label: 'Intensidade Respiratória',
-            data: dadosFluxo,
-            borderColor: '#3498db', // Cor da linha azul
-            backgroundColor: 'rgba(52, 152, 219, 0.1)', // Preenchimento suave abaixo da linha
-            borderWidth: 3,
-            tension: 0.4, // Deixa a linha arredondada (suave) em vez de pontiaguda
-            pointRadius: 0, // Esconde as "bolinhas" nos pontos de dados (melhor para visual de monitor)
-            fill: true
-        }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        animation: false, // Importante: desligar a animação padrão para atualizações rápidas fluírem bem
-        scales: {
-            y: {
-                min: 0,
-                max: 100, // Escala de 0 a 100 (você vai ajustar depois conforme o sensor do ESP32)
-                grid: { color: '#f0f0f0' }
-            },
-            x: {
-                display: false // Esconde os textos do eixo X para focar só na onda
-            }
-        },
-        plugins: {
-            legend: { display: false } // Esconde a legenda para ganhar espaço
-        }
+/**
+ * Atualiza o status de conexão do microcontrolador na interface.
+ * @param {boolean} online - true para Conectado/Online, false para Desconectado/Offline
+ * @param {object} [options] - Opções adicionais (ex: nome do dispositivo, mensagem customizada)
+ */
+function setMicrocontrollerStatus(online, options = {}) {
+    isMicrocontrollerOnline = !!online;
+    
+    const badge = document.getElementById('mcu-badge');
+    const textElem = document.getElementById('mcu-status-text');
+    const dotElem = document.getElementById('mcu-dot');
+    
+    if (!badge || !textElem) return;
+
+    const deviceName = options.device || 'ESP32';
+    const customText = options.text;
+
+    if (isMicrocontrollerOnline) {
+        badge.classList.remove('mcu-offline');
+        badge.classList.add('mcu-online');
+        textElem.textContent = customText || 'Online';
+        badge.setAttribute('title', `${deviceName} Conectado e transmitindo dados em tempo real. (Clique para alternar teste)`);
+    } else {
+        badge.classList.remove('mcu-online');
+        badge.classList.add('mcu-offline');
+        textElem.textContent = customText || 'Offline';
+        badge.setAttribute('title', `${deviceName} Desconectado / Sem sinal do sensor. (Clique para alternar teste)`);
     }
+
+    console.log(`[RespirAI] Status do microcontrolador: ${isMicrocontrollerOnline ? 'ONLINE' : 'OFFLINE'}`);
+}
+
+// Expõe no escopo global para facilitar integração com WebSockets, MQTT ou APIs
+window.setMicrocontrollerStatus = setMicrocontrollerStatus;
+
+// Alternância rápida de teste ao clicar no badge de status
+document.addEventListener('DOMContentLoaded', () => {
+    const badge = document.getElementById('mcu-badge');
+    if (badge) {
+        badge.addEventListener('click', () => {
+            setMicrocontrollerStatus(!isMicrocontrollerOnline);
+        });
+    }
+
+    // Inicializa painel de cadastro se estiver na página de registros
+    initPatientPanel();
 });
 
-// ==========================================
-// SIMULAÇÃO DO ESP32 (Dados Falsos)
-// ==========================================
-let tempoSimulado = 0;
 
-// A função setInterval executa um bloco de código repetidamente (neste caso, a cada 200 milissegundos)
-setInterval(() => {
-            
-    // 1. Criando um dado falso parecido com respiração (uma onda senoidal matemática)
-    const onda = Math.sin(tempoSimulado) * 35; // Altura da onda
-    const ruido = Math.random() * 5; // Simula a imperfeição de um sensor real
-    const leituraFalsa = Math.round(50 + onda + ruido); 
+// ==========================================================================
+// 2. MONITOR GRÁFICO DO SINAL RESPIRATÓRIO (PAINEL CLÍNICO)
+// ==========================================================================
+const canvasElement = document.getElementById('graficoSinal');
 
-    // 2. Colocando o dado novo dentro do gráfico
-    labelsTempo.push('');
-    dadosFluxo.push(leituraFalsa);
+if (canvasElement) {
+    const contexto = canvasElement.getContext('2d');
 
-    // 3. Efeito "Monitor de UTI": se passar de 100 pontos, removemos o mais velho
-    // Isso faz o gráfico deslizar para a esquerda
-    if (dadosFluxo.length > 100) {
-        labelsTempo.shift(); // Remove o primeiro item do array de tempo
-        dadosFluxo.shift();  // Remove o primeiro item do array de dados
+    // Arrays de dados do gráfico
+    const labelsTempo = [];
+    const dadosFluxo = [];
+
+    const chartMestre = new Chart(contexto, {
+        type: 'line',
+        data: {
+            labels: labelsTempo,
+            datasets: [{
+                label: 'Intensidade Respiratória',
+                data: dadosFluxo,
+                borderColor: '#38bdf8',
+                backgroundColor: 'rgba(56, 189, 248, 0.12)',
+                borderWidth: 2.5,
+                tension: 0.35,
+                pointRadius: 0,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: false,
+            scales: {
+                y: {
+                    min: 0,
+                    max: 100,
+                    grid: { 
+                        color: 'rgba(255, 255, 255, 0.05)',
+                        drawBorder: false
+                    },
+                    ticks: {
+                        color: '#64748b',
+                        font: { size: 11 }
+                    }
+                },
+                x: {
+                    display: false
+                }
+            },
+            plugins: {
+                legend: { display: false },
+                tooltip: { enabled: false }
+            }
+        }
+    });
+
+    let tempoSimulado = 0;
+
+    // Atualização em tempo real (dados simulados do ESP32)
+    setInterval(() => {
+        let leitura;
+
+        if (isMicrocontrollerOnline) {
+            // Simulação de fluxo respiratório com leve ruído de sensor
+            const onda = Math.sin(tempoSimulado) * 35;
+            const ruido = (Math.random() - 0.5) * 6;
+            leitura = Math.round(50 + onda + ruido);
+            tempoSimulado += 0.15;
+        } else {
+            // Sinal em repouso / flatline quando o microcontrolador está offline
+            leitura = 0;
+        }
+
+        labelsTempo.push('');
+        dadosFluxo.push(leitura);
+
+        // Deslocamento para esquerda estilo monitor hospitalar
+        if (dadosFluxo.length > 80) {
+            labelsTempo.shift();
+            dadosFluxo.shift();
+        }
+
+        chartMestre.update();
+
+        // Atualização do valor de RPM
+        const rpmElem = document.getElementById('displayRpm');
+        if (rpmElem) {
+            if (isMicrocontrollerOnline) {
+                rpmElem.innerText = Math.floor(Math.random() * 3) + 15;
+            } else {
+                rpmElem.innerText = '--';
+            }
+        }
+
+    }, 150);
+}
+
+
+// ==========================================================================
+// 3. CONTROLE DO PAINEL LATERAL DE CADASTRO (REGISTRO DE PACIENTES)
+// ==========================================================================
+function initPatientPanel() {
+    const btnAbrir = document.getElementById('btn-abrir-aba');
+    const btnFechar = document.getElementById('btn-fechar-aba');
+    const painel = document.getElementById('painel-cadastro');
+    const overlay = document.getElementById('overlay');
+
+    if (btnAbrir && painel && overlay) {
+        const abrirPainel = () => {
+            painel.classList.add('active');
+            overlay.classList.add('active');
+        };
+
+        const fecharPainel = () => {
+            painel.classList.remove('active');
+            overlay.classList.remove('active');
+        };
+
+        btnAbrir.addEventListener('click', abrirPainel);
+        if (btnFechar) btnFechar.addEventListener('click', fecharPainel);
+        overlay.addEventListener('click', fecharPainel);
     }
-
-    // 4. Mandamos o Chart.js atualizar a tela com os novos dados
-    chartMestre.update();
-    
-    // 5. Atualizando o cartão de RPM falso (um número aleatório entre 14 e 18)
-    document.getElementById('displayRpm').innerText = Math.floor(Math.random() * 5) + 14;
-
-    tempoSimulado += 0.15; // Avança o tempo para a onda continuar desenhando
-
-}, 200); // 200ms significa que o gráfico recebe 5 dados por segundo
+}
