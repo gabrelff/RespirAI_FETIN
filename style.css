@@ -1,6 +1,4 @@
-/* ==========================================================================
-   CONFIGURAÇÃO GERAL & DESIGN SYSTEM
-   ========================================================================== */
+/* Geral do site */
 * {
     margin: 0;
     padding: 0;
@@ -34,30 +32,21 @@ body {
     overflow-x: hidden;
 }
 
-/* ==========================================================================
-   BARRA SUPERIOR (TOPBAR FIXA & FULL-WIDTH)
-   ========================================================================== */
+/* Barra fixa no topo */
 .topbar {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     width: 100%;
-    height: var(--topbar-height);
-    background-color: rgba(13, 18, 34, 0.9);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    height: 65px;
+    background-color: rgba(13, 18, 34);
     border-bottom: 1px solid var(--border-color);
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 32px;
     z-index: 1000;
-}
-
-.topbar-left {
-    display: flex;
-    align-items: center;
 }
 
 /* Logo & Título RespirAI no Topo */
@@ -74,14 +63,10 @@ body {
 
 .logo-container svg {
     color: #38bdf8;
-    flex-shrink: 0;
 }
 
 .logo-text {
     color: #ffffff;
-    font-size: 22px;
-    font-weight: 700;
-    letter-spacing: -0.5px;
 }
 
 .topbar-right {
@@ -90,7 +75,7 @@ body {
     gap: 16px;
 }
 
-/* Badge de Conexão do Microcontrolador (Simples e sem iluminação) */
+/* Conexão do ESP32 */
 .mcu-status-wrapper {
     display: flex;
     align-items: center;
@@ -122,7 +107,7 @@ body {
     color: var(--text-secondary);
 }
 
-/* Bolinha de Status Sólida */
+/* Status Sólida */
 .mcu-pulse-dot {
     width: 8px;
     height: 8px;
@@ -187,9 +172,7 @@ body {
     color: var(--text-primary);
 }
 
-/* ==========================================================================
-   CONTEÚDO PRINCIPAL (DASHBOARD FULL-WIDTH)
-   ========================================================================== */
+/* Dashboard */
 .main-content {
     width: 100%;
     max-width: 1440px;
@@ -225,9 +208,7 @@ body {
     margin-bottom: 0;
 }
 
-/* ==========================================================================
-   CARDS DE MÉTRICAS & INDICADORES
-   ========================================================================== */
+/* Cards */
 .cards-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -271,9 +252,7 @@ body {
     color: var(--text-primary);
 }
 
-/* ==========================================================================
-   CONTAINER DO GRÁFICO (MONITOR RESPIRATÓRIO)
-   ========================================================================== */
+/* Gráfico */
 .chart-container {
     background: #0f172a;
     border: 1px solid var(--border-color);
@@ -312,93 +291,7 @@ body {
     min-height: 0;
 }
 
-/* ==========================================================================
-   BOTÕES & TABELAS (REGISTRO DE PACIENTES)
-   ========================================================================== */
-.btn-primary {
-    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-    color: #ffffff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.2s ease;
-    box-shadow: 0 2px 10px rgba(59, 130, 246, 0.3);
-}
-
-.btn-primary:hover {
-    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 14px rgba(59, 130, 246, 0.4);
-}
-
-.table-container {
-    background-color: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 24px;
-    overflow-x: auto;
-}
-
-.search-bar {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background-color: #0b0f19;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 10px 16px;
-    margin-bottom: 20px;
-    max-width: 400px;
-}
-
-.search-bar svg {
-    color: var(--text-muted);
-}
-
-.search-bar input {
-    background: transparent;
-    border: none;
-    color: var(--text-primary);
-    font-size: 14px;
-    width: 100%;
-    outline: none;
-}
-
-.patients-table {
-    width: 100%;
-    border-collapse: collapse;
-    text-align: left;
-}
-
-.patients-table th {
-    color: var(--text-muted);
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    padding: 12px 16px;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.patients-table td {
-    padding: 16px;
-    font-size: 14px;
-    color: var(--text-primary);
-    border-bottom: 1px solid rgba(26, 35, 58, 0.6);
-}
-
-.patients-table tr:hover td {
-    background-color: rgba(255, 255, 255, 0.02);
-}
-
-/* ==========================================================================
-   RESPONSIVIDADE (MEDIA QUERIES)
-   ========================================================================== */
+/* Coisas a mais */
 @media (max-width: 1200px) {
     .cards-grid {
         grid-template-columns: repeat(2, 1fr);

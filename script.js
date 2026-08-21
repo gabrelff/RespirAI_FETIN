@@ -1,10 +1,4 @@
-/**
- * RespirAI - Controle do Sistema & Status do Microcontrolador
- */
-
-// ==========================================================================
 // 1. GERENCIAMENTO DE STATUS DO MICROCONTROLADOR (ONLINE / OFFLINE)
-// ==========================================================================
 let isMicrocontrollerOnline = true;
 
 /**
@@ -50,15 +44,10 @@ document.addEventListener('DOMContentLoaded', () => {
             setMicrocontrollerStatus(!isMicrocontrollerOnline);
         });
     }
-
-    // Inicializa painel de cadastro se estiver na página de registros
-    initPatientPanel();
 });
 
 
-// ==========================================================================
 // 2. MONITOR GRÁFICO DO SINAL RESPIRATÓRIO (PAINEL CLÍNICO)
-// ==========================================================================
 const canvasElement = document.getElementById('graficoSinal');
 
 if (canvasElement) {

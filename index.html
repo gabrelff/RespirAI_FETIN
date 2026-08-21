@@ -4,35 +4,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RespirAI - Painel Clínico</title>
+    <title>RespirAR - Painel Clínico</title>
     <link rel="stylesheet" href="style.css">
-
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
-
     <!-- BARRA SUPERIOR FIXA -->
     <header class="topbar">
-        <div class="topbar-left">
-            <a href="index.html" class="logo-container">
-                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="lucide lucide-scan-heart">
-                    <path d="M17 3h2a2 2 0 0 1 2 2v2" />
-                    <path d="M21 17v2a2 2 0 0 1-2 2h-2" />
-                    <path d="M3 7V5a2 2 0 0 1 2-2h2" />
-                    <path d="M7 21H5a2 2 0 0 1-2-2v-2" />
-                    <path d="M7.828 13.07A3 3 0 0 1 12 8.764a3 3 0 0 1 4.172 4.306l-3.447 3.62a1 1 0 0 1-1.449 0z" />
-                </svg>
-                <span class="logo-text">RespirAI</span>
-            </a>
-        </div>
+
+        <a href="index.html" class="logo-container">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-scan-heart">
+                <path d="M17 3h2a2 2 0 0 1 2 2v2" />
+                <path d="M21 17v2a2 2 0 0 1-2 2h-2" />
+                <path d="M3 7V5a2 2 0 0 1 2-2h2" />
+                <path d="M7 21H5a2 2 0 0 1-2-2v-2" />
+                <path d="M7.828 13.07A3 3 0 0 1 12 8.764a3 3 0 0 1 4.172 4.306l-3.447 3.62a1 1 0 0 1-1.449 0z" />
+            </svg>
+            <span class="logo-text">RespirAR</span>
+        </a>
 
         <div class="topbar-right">
             <div class="mcu-status-wrapper">
                 <div class="mcu-badge mcu-online" id="mcu-badge"
-                    title="Status da conexão do microcontrolador (clique para testar alternância)">
+                    title="Status da conexão do ESP32 (clique para testar alternância)">
                     <span class="mcu-pulse-dot" id="mcu-dot"></span>
                     <svg class="mcu-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -48,6 +45,7 @@
                 </div>
             </div>
         </div>
+
     </header>
 
     <!-- CONTEÚDO PRINCIPAL (DASHBOARD) -->
