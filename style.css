@@ -9,7 +9,6 @@
 :root {
     --bg-main: #0b0f19;
     --bg-card: #0f172a;
-    --bg-card-hover: #131d35;
     --border-color: #1a233a;
     --border-subtle: #24304f;
     --text-primary: #ffffff;
@@ -19,7 +18,6 @@
     --accent-cyan: #06b6d4;
     --status-online: #10b981;
     --status-offline: #ef4444;
-    --status-warning: #f59e0b;
     --topbar-height: 68px;
 }
 
@@ -32,15 +30,19 @@ body {
     overflow-x: hidden;
 }
 
-/* Barra fixa no topo */
+/* ==========================================================================
+   BARRA SUPERIOR (TOPBAR FIXA & FULL-WIDTH)
+   ========================================================================== */
 .topbar {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     width: 100%;
-    height: 65px;
-    background-color: rgba(13, 18, 34);
+    height: var(--topbar-height);
+    background-color: rgba(13, 18, 34, 0.95);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--border-color);
     display: flex;
     align-items: center;
@@ -49,7 +51,12 @@ body {
     z-index: 1000;
 }
 
-/* Logo & Título RespirAI no Topo */
+.topbar-left {
+    display: flex;
+    align-items: center;
+}
+
+/* Logo & Título RespirAR */
 .logo-container {
     display: flex;
     align-items: center;
@@ -63,10 +70,14 @@ body {
 
 .logo-container svg {
     color: #38bdf8;
+    flex-shrink: 0;
 }
 
 .logo-text {
     color: #ffffff;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
 }
 
 .topbar-right {
@@ -75,7 +86,7 @@ body {
     gap: 16px;
 }
 
-/* Conexão do ESP32 */
+/* Badge de Conexão do ESP32 (Simples e sem iluminação) */
 .mcu-status-wrapper {
     display: flex;
     align-items: center;
@@ -107,7 +118,7 @@ body {
     color: var(--text-secondary);
 }
 
-/* Status Sólida */
+/* Bolinha de Status Sólida */
 .mcu-pulse-dot {
     width: 8px;
     height: 8px;
@@ -156,145 +167,116 @@ body {
     font-weight: 600;
 }
 
-.mcu-toggle-btn {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--border-color);
-    color: var(--text-muted);
-    font-size: 11px;
-    padding: 4px 8px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.mcu-toggle-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: var(--text-primary);
-}
-
-/* Dashboard */
+/* ==========================================================================
+   CONTEÚDO PRINCIPAL (DASHBOARD)
+   ========================================================================== */
 .main-content {
     width: 100%;
-    max-width: 1440px;
+    max-width: 1360px;
     margin: 0 auto;
     margin-top: var(--topbar-height);
-    padding: 36px 32px 48px 32px;
+    padding: 40px 32px 48px 32px;
     flex: 1;
 }
 
 .header h1 {
-    font-size: 30px;
+    font-size: 32px;
     margin-bottom: 6px;
     font-weight: 700;
     color: var(--text-primary);
+    letter-spacing: -0.5px;
 }
 
 .header p {
     color: var(--text-muted);
-    font-size: 12px;
+    font-size: 13px;
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    margin-bottom: 28px;
+    margin-bottom: 32px;
 }
 
-.header-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 28px;
-}
-
-.header-container .header p {
-    margin-bottom: 0;
-}
-
-/* Cards */
+/* ==========================================================================
+   GRADE DE GASES (6 CARDS)
+   ========================================================================== */
 .cards-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
     width: 100%;
-    margin-bottom: 24px;
 }
 
-.card {
+.card.gas-card {
     background-color: var(--bg-card);
     border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 22px;
+    border-radius: 14px;
+    padding: 24px 28px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 140px;
+    min-height: 155px;
 }
 
 .card-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-}
-
-.card-title {
-    font-size: 11px;
-    color: var(--text-secondary);
-    text-transform: uppercase;
-    font-weight: 600;
-    letter-spacing: 1px;
-}
-
-.card-header svg {
-    color: #64748b;
-}
-
-.card-value {
-    font-size: 36px;
-    font-weight: 700;
-    color: var(--text-primary);
-}
-
-/* Gráfico */
-.chart-container {
-    background: #0f172a;
-    border: 1px solid var(--border-color);
-    padding: 24px;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-    height: 440px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-}
-
-.chart-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     margin-bottom: 16px;
 }
 
-.chart-title {
+.gas-title-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.gas-formula {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.2;
+}
+
+.gas-formula sub {
     font-size: 15px;
+    color: inherit;
     font-weight: 600;
+    bottom: -0.15em;
+}
+
+.card-title {
+    font-size: 12px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+}
+
+/* Exibição do Valor em PPM */
+.card-value {
+    font-size: 40px;
+    font-weight: 700;
     color: var(--text-primary);
     display: flex;
-    align-items: center;
+    align-items: baseline;
     gap: 8px;
+    letter-spacing: -0.5px;
 }
 
-.chart-title svg {
-    color: #38bdf8;
+.gas-unit {
+    font-size: 14px;
+    color: var(--text-muted);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
 }
 
-.chart-canvas-wrapper {
-    flex: 1;
-    position: relative;
-    min-height: 0;
-}
-
-/* Coisas a mais */
-@media (max-width: 1200px) {
+/* ==========================================================================
+   RESPONSIVIDADE (MEDIA QUERIES)
+   ========================================================================== */
+@media (max-width: 1024px) {
     .cards-grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
     }
 }
 
@@ -315,10 +297,14 @@ body {
 @media (max-width: 600px) {
     .cards-grid {
         grid-template-columns: 1fr;
+        gap: 16px;
     }
 
-    .side-panel {
-        width: 100%;
-        right: -100%;
+    .card.gas-card {
+        padding: 20px;
+    }
+
+    .card-value {
+        font-size: 34px;
     }
 }
