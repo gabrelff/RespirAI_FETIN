@@ -1,6 +1,3 @@
-/* ==========================================================================
-   RespirAI - Estilos Gerais e Design System
-   ========================================================================== */
 * {
     margin: 0;
     padding: 0;
@@ -50,9 +47,7 @@ body {
     overflow-x: hidden;
 }
 
-/* ==========================================================================
-   BARRA SUPERIOR (TOPBAR FIXA & FULL-WIDTH)
-   ========================================================================== */
+/* BARRA SUPERIOR (TOPBAR FIXA & FULL-WIDTH) */
 .topbar {
     position: fixed;
     top: 0;
@@ -183,9 +178,7 @@ body {
     font-weight: 600;
 }
 
-/* ==========================================================================
-   CONTEÚDO PRINCIPAL (DASHBOARD)
-   ========================================================================== */
+/* CONTEÚDO PRINCIPAL (DASHBOARD)*/
 .main-content {
     width: 100%;
     max-width: 1360px;
@@ -214,9 +207,7 @@ body {
     letter-spacing: 1.5px;
 }
 
-/* ==========================================================================
-   CARD DE CONTROLE DE TESTE (BOTÃO START & TIMER)
-   ========================================================================== */
+/* CARD DE CONTROLE DE TESTE (BOTÃO START & TIMER) */
 .test-control-card {
     background: linear-gradient(145deg, #111a2f 0%, #0d1424 100%);
     border: 1px solid var(--border-subtle);
@@ -374,9 +365,7 @@ body {
     color: var(--text-muted);
 }
 
-/* ==========================================================================
-   TÍTULOS DE SEÇÃO
-   ========================================================================== */
+/* TÍTULOS DE SEÇÃO */
 .section-title-group {
     margin-bottom: 16px;
 }
@@ -393,9 +382,7 @@ body {
     color: var(--text-muted);
 }
 
-/* ==========================================================================
-   GRADE DE GASES (4 CARDS)
-   ========================================================================== */
+/* GRADE DE GASES (4 CARDS) */
 .cards-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -497,9 +484,7 @@ body {
     font-weight: 500;
 }
 
-/* ==========================================================================
-   SEÇÃO DE PADRÕES RESPIRATÓRIOS & DIAGNÓSTICO
-   ========================================================================== */
+/* SEÇÃO DE PADRÕES RESPIRATÓRIOS & DIAGNÓSTICO*/
 .diagnostic-header-group {
     display: flex;
     justify-content: space-between;
@@ -624,9 +609,7 @@ body {
     border: 1px solid var(--pill-danger-border);
 }
 
-/* ==========================================================================
-   RESPONSIVIDADE (MEDIA QUERIES)
-   ========================================================================== */
+/* RESPONSIVIDADE (MEDIA QUERIES) */
 @media (max-width: 1100px) {
     .cards-grid {
         grid-template-columns: repeat(2, 1fr);

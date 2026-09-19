@@ -1,7 +1,3 @@
-/**
- * RespirAI - Monitoramento Respiratório de Gases & Triagem Clínica (ESP32)
- */
-
 // ==========================================================================
 // 1. CONFIGURAÇÃO E GERENCIAMENTO DO WEBSOCKET
 // ==========================================================================
@@ -85,9 +81,7 @@ function onError(event) {
 // 2. CONTROLE DO TESTE DE SOPRO (BOTÃO START & CRONÔMETRO)
 // ==========================================================================
 
-/**
- * Disparado ao clicar no botão "Iniciar Teste de Sopro"
- */
+// Disparado ao clicar no botão "Iniciar Teste de Sopro"
 function iniciarTesteSopro() {
     if (isCapturing) return;
 
@@ -208,10 +202,8 @@ function finalizarSessaoCaptura() {
 // 3. PROCESSAMENTO DE DADOS & DIAGNÓSTICO CLÍNICO
 // ==========================================================================
 
-/**
- * Processa a mensagem JSON recebida do ESP32
- * Suporta a estrutura oficial do respirai_firmware.ino
- */
+// Processa a mensagem JSON recebida do ESP32
+// Suporta a estrutura oficial do respirai_firmware.ino
 function processarDadosRecebidos(dados) {
     // 1. Extração dos Dados Brutos (Picos dos gases)
     const brutos = dados.DadosBrutos || dados;
@@ -232,9 +224,7 @@ function processarDadosRecebidos(dados) {
     atualizarPainelDiagnostico(diag);
 }
 
-/**
- * Atualiza o valor exibido no card do respectivo gás
- */
+// Atualiza o valor exibido no card do respectivo gás
 function atualizarValorGas(gas, valor) {
     const elem = document.getElementById(`val-${gas}`);
     if (elem) {
@@ -246,9 +236,7 @@ function atualizarValorGas(gas, valor) {
     }
 }
 
-/**
- * Atualiza os cartões de diagnóstico e o status consolidado
- */
+// Atualiza os cartões de diagnóstico e o status consolidado
 function atualizarPainelDiagnostico(diag) {
     // Status individuais
     atualizarBadgeDiagnostico('diag-nh3', diag.Status_NH3 || 'Normal');
@@ -275,9 +263,7 @@ function atualizarPainelDiagnostico(diag) {
     }
 }
 
-/**
- * Define o estilo (verde, amarelo, vermelho) de cada badge de diagnóstico
- */
+// Define o estilo (verde, amarelo, vermelho) de cada badge de diagnóstico
 function atualizarBadgeDiagnostico(elementId, textoStatus) {
     const elem = document.getElementById(elementId);
     if (!elem) return;
@@ -293,9 +279,7 @@ function atualizarBadgeDiagnostico(elementId, textoStatus) {
     }
 }
 
-/**
- * Lógica de fallback para cálculo local de diagnóstico (idêntica ao respirai_firmware.ino)
- */
+// Lógica de fallback para cálculo local de diagnóstico (idêntica ao respirai_firmware.ino)
 function calcularDiagnosticoLocal(nh3, c2h5oh, h2, co) {
     let alertaRenal = "Normal";
     let alertaDiabetes = "Normal";
@@ -349,9 +333,7 @@ function setMicrocontrollerStatus(online) {
     }
 }
 
-/**
- * Gera leituras de demonstração realistas para teste sem o microcontrolador físico
- */
+// Gera leituras de demonstração realistas para teste sem o microcontrolador físico
 function gerarLeituraSimulada() {
     const amostraSimulada = {
         DadosBrutos: {
