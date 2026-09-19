@@ -1,4 +1,6 @@
-/* Geral do site */
+/* ==========================================================================
+   RespirAR - Estilos Gerais e Design System
+   ========================================================================== */
 * {
     margin: 0;
     padding: 0;
@@ -9,15 +11,33 @@
 :root {
     --bg-main: #0b0f19;
     --bg-card: #0f172a;
-    --border-color: #1a233a;
-    --border-subtle: #24304f;
+    --bg-card-subtle: #141e33;
+    --border-color: #1e293b;
+    --border-subtle: #2d3b59;
+    
     --text-primary: #ffffff;
     --text-secondary: #94a3b8;
     --text-muted: #64748b;
+    
     --accent-blue: #3b82f6;
-    --accent-cyan: #06b6d4;
+    --accent-blue-hover: #2563eb;
+    --accent-cyan: #38bdf8;
+    
     --status-online: #10b981;
     --status-offline: #ef4444;
+    
+    --pill-normal-bg: rgba(16, 185, 129, 0.15);
+    --pill-normal-border: #10b981;
+    --pill-normal-text: #34d399;
+    
+    --pill-warning-bg: rgba(245, 158, 11, 0.15);
+    --pill-warning-border: #f59e0b;
+    --pill-warning-text: #fbbf24;
+    
+    --pill-danger-bg: rgba(239, 68, 68, 0.15);
+    --pill-danger-border: #ef4444;
+    --pill-danger-text: #f87171;
+
     --topbar-height: 68px;
 }
 
@@ -56,7 +76,6 @@ body {
     align-items: center;
 }
 
-/* Logo & Título RespirAR */
 .logo-container {
     display: flex;
     align-items: center;
@@ -69,7 +88,7 @@ body {
 }
 
 .logo-container svg {
-    color: #38bdf8;
+    color: var(--accent-cyan);
     flex-shrink: 0;
 }
 
@@ -86,7 +105,7 @@ body {
     gap: 16px;
 }
 
-/* Badge de Conexão do ESP32 (Simples e sem iluminação) */
+/* Badge de Conexão do ESP32 */
 .mcu-status-wrapper {
     display: flex;
     align-items: center;
@@ -118,7 +137,6 @@ body {
     color: var(--text-secondary);
 }
 
-/* Bolinha de Status Sólida */
 .mcu-pulse-dot {
     width: 8px;
     height: 8px;
@@ -126,7 +144,6 @@ body {
     flex-shrink: 0;
 }
 
-/* Estado Online */
 .mcu-badge.mcu-online .mcu-pulse-dot {
     background-color: var(--status-online);
 }
@@ -136,7 +153,6 @@ body {
     font-weight: 600;
 }
 
-/* Estado Offline */
 .mcu-badge.mcu-offline .mcu-pulse-dot {
     background-color: var(--status-offline);
 }
@@ -175,12 +191,16 @@ body {
     max-width: 1360px;
     margin: 0 auto;
     margin-top: var(--topbar-height);
-    padding: 40px 32px 48px 32px;
+    padding: 32px 32px 60px 32px;
     flex: 1;
 }
 
+.header {
+    margin-bottom: 24px;
+}
+
 .header h1 {
-    font-size: 32px;
+    font-size: 30px;
     margin-bottom: 6px;
     font-weight: 700;
     color: var(--text-primary);
@@ -192,35 +212,209 @@ body {
     font-size: 13px;
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    margin-bottom: 32px;
 }
 
 /* ==========================================================================
-   GRADE DE GASES (6 CARDS)
+   CARD DE CONTROLE DE TESTE (BOTÃO START & TIMER)
+   ========================================================================== */
+.test-control-card {
+    background: linear-gradient(145deg, #111a2f 0%, #0d1424 100%);
+    border: 1px solid var(--border-subtle);
+    border-radius: 16px;
+    padding: 24px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    margin-bottom: 36px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.test-control-left {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-width: 320px;
+}
+
+.btn-start {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 14px 24px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.btn-start:hover:not(:disabled) {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.6);
+    transform: translateY(-1px);
+}
+
+.btn-start:active:not(:disabled) {
+    transform: translateY(1px);
+}
+
+.btn-start:disabled {
+    background: #1e293b;
+    color: var(--text-muted);
+    cursor: not-allowed;
+    box-shadow: none;
+    border: 1px solid var(--border-color);
+}
+
+.btn-icon {
+    flex-shrink: 0;
+}
+
+.test-status-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+}
+
+.status-label {
+    color: var(--text-muted);
+}
+
+.status-badge {
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.status-badge.status-idle {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+}
+
+.status-badge.status-blowing {
+    background: rgba(56, 189, 248, 0.15);
+    color: var(--accent-cyan);
+    border: 1px solid rgba(56, 189, 248, 0.4);
+    animation: pulseBlink 1.2s infinite ease-in-out;
+}
+
+.status-badge.status-done {
+    background: var(--pill-normal-bg);
+    color: var(--pill-normal-text);
+    border: 1px solid var(--pill-normal-border);
+}
+
+@keyframes pulseBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.test-control-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.timer-display {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.timer-label {
+    font-size: 13px;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.timer-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--accent-cyan);
+    font-variant-numeric: tabular-nums;
+}
+
+.progress-bar-container {
+    width: 100%;
+    height: 10px;
+    background-color: #1e293b;
+    border-radius: 9999px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.progress-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #06b6d4 0%, #3b82f6 100%);
+    border-radius: 9999px;
+    transition: width 0.1s linear;
+}
+
+.test-hint {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+/* ==========================================================================
+   TÍTULOS DE SEÇÃO
+   ========================================================================== */
+.section-title-group {
+    margin-bottom: 16px;
+}
+
+.section-title-group h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+}
+
+.section-subtitle {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+/* ==========================================================================
+   GRADE DE GASES (4 CARDS)
    ========================================================================== */
 .cards-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
     width: 100%;
+    margin-bottom: 40px;
 }
 
 .card.gas-card {
     background-color: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: 14px;
-    padding: 24px 28px;
+    padding: 22px 24px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: 155px;
+    min-height: 165px;
+    position: relative;
+    overflow: hidden;
 }
 
 .card-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
 }
 
 .gas-title-group {
@@ -248,35 +442,207 @@ body {
     color: var(--text-secondary);
     text-transform: uppercase;
     font-weight: 600;
-    letter-spacing: 0.8px;
+    letter-spacing: 0.5px;
+}
+
+.gas-type-tag {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
 }
 
 /* Exibição do Valor em PPM */
 .card-value {
-    font-size: 40px;
+    font-size: 38px;
     font-weight: 700;
     color: var(--text-primary);
     display: flex;
     align-items: baseline;
     gap: 8px;
     letter-spacing: -0.5px;
+    margin-bottom: 8px;
 }
 
 .gas-unit {
-    font-size: 14px;
+    font-size: 13px;
     color: var(--text-muted);
     font-weight: 600;
     letter-spacing: 0.5px;
     text-transform: uppercase;
 }
 
+.card-footer {
+    display: flex;
+    justify-content: flex-start;
+    padding-top: 8px;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.threshold-tag {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+/* ==========================================================================
+   SEÇÃO DE PADRÕES RESPIRATÓRIOS & DIAGNÓSTICO
+   ========================================================================== */
+.diagnostic-header-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.overall-status-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--bg-card);
+    padding: 8px 16px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+}
+
+.overall-status-label {
+    font-size: 13px;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.diagnostic-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    width: 100%;
+}
+
+.diag-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 22px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transition: border-color 0.2s ease;
+}
+
+.diag-card-top {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.diag-icon-wrapper {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: rgba(56, 189, 248, 0.1);
+    color: var(--accent-cyan);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.diag-header-text h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+}
+
+.diag-header-text span {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.diag-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.diag-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+/* Status Pills (Tags Coloridas de Diagnóstico) */
+.diag-status-pill, .status-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    width: fit-content;
+    letter-spacing: 0.3px;
+    transition: all 0.3s ease;
+}
+
+.status-pill-neutral {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+}
+
+.status-pill-normal {
+    background: var(--pill-normal-bg);
+    color: var(--pill-normal-text);
+    border: 1px solid var(--pill-normal-border);
+}
+
+.status-pill-warning {
+    background: var(--pill-warning-bg);
+    color: var(--pill-warning-text);
+    border: 1px solid var(--pill-warning-border);
+}
+
+.status-pill-danger {
+    background: var(--pill-danger-bg);
+    color: var(--pill-danger-text);
+    border: 1px solid var(--pill-danger-border);
+}
+
 /* ==========================================================================
    RESPONSIVIDADE (MEDIA QUERIES)
    ========================================================================== */
-@media (max-width: 1024px) {
+@media (max-width: 1100px) {
     .cards-grid {
         grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 820px) {
+    .test-control-card {
+        flex-direction: column;
+        align-items: stretch;
         gap: 20px;
+    }
+
+    .test-control-left {
+        min-width: unset;
+    }
+
+    .diagnostic-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .diagnostic-header-group {
+        flex-direction: column;
+        align-items: flex-start;
     }
 }
 
@@ -286,7 +652,7 @@ body {
     }
 
     .main-content {
-        padding: 24px 16px 36px 16px;
+        padding: 20px 16px 40px 16px;
     }
 
     .mcu-tag {
@@ -294,17 +660,17 @@ body {
     }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 580px) {
     .cards-grid {
         grid-template-columns: 1fr;
         gap: 16px;
     }
 
     .card.gas-card {
-        padding: 20px;
+        padding: 18px 20px;
     }
 
     .card-value {
-        font-size: 34px;
+        font-size: 32px;
     }
 }

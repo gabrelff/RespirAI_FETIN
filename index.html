@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RespirAR - Painel Clínico</title>
+    <title>RespirAR - Painel Clínico de Qualidade Respiratória</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -30,7 +30,7 @@
         <div class="topbar-right">
             <div class="mcu-status-wrapper">
                 <div class="mcu-badge mcu-online" id="mcu-badge"
-                    title="Status da conexão do ESP32 (clique para testar alternância)">
+                    title="Status da conexão do ESP32 (clique para alternar modo online/simulação)">
                     <span class="mcu-pulse-dot" id="mcu-dot"></span>
                     <svg class="mcu-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -50,97 +50,221 @@
 
     <!-- CONTEÚDO PRINCIPAL (DASHBOARD) -->
     <main class="main-content">
+        
+        <!-- CABEÇALHO DO PAINEL -->
         <div class="header">
             <h1>Qualidade Respiratória</h1>
-            <p>Monitoramento em tempo real dos gases expelidos pelo pulmão</p>
+            <p>Análise de Biomarcadores Gasosos Expelidos pelo Pulmão</p>
         </div>
 
-        <!-- GRADE DE GASES (6 CARDS) -->
+        <!-- PAINEL DE CONTROLE DE SESSÃO / BOTÃO START -->
+        <section class="test-control-card">
+            <div class="test-control-left">
+                <button id="btn-start" class="btn-start" onclick="iniciarTesteSopro()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"
+                        class="btn-icon">
+                        <polygon points="6 3 20 12 6 21 6 3" />
+                    </svg>
+                    <span id="btn-start-text">Iniciar Teste de Sopro (5s)</span>
+                </button>
+                <div class="test-status-info">
+                    <span class="status-label">Estado da Leitura:</span>
+                    <span class="status-badge status-idle" id="test-status-badge">Pronto para iniciar</span>
+                </div>
+            </div>
+
+            <div class="test-control-right">
+                <div class="timer-display">
+                    <span class="timer-label">Janela de Coleta:</span>
+                    <span class="timer-value" id="timer-countdown">5.0s</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" id="progress-bar-fill"></div>
+                </div>
+                <p class="test-hint" id="test-hint">Pressione o botão ao lado e sopre firmemente no bocal do sensor por 5 segundos.</p>
+            </div>
+        </section>
+
+        <!-- SEÇÃO 1: GRADE DOS 4 GASES MONITORADOS -->
+        <div class="section-title-group">
+            <h2>Biomarcadores Gasosos (Pico de Leitura)</h2>
+            <span class="section-subtitle">Concentração máxima atingida durante o sopro</span>
+        </div>
+
         <div class="cards-grid">
-            <!-- 1. CO -->
-            <div class="card gas-card">
-                <div class="card-header">
-                    <div class="gas-title-group">
-                        <div class="gas-formula">CO</div>
-                        <span class="card-title">Monóxido de Carbono</span>
-                    </div>
-                </div>
-                <div class="card-value">
-                    <span id="val-CO">--</span>
-                    <span class="gas-unit">PPM</span>
-                </div>
-            </div>
-
-            <!-- 2. CH4 -->
-            <div class="card gas-card">
-                <div class="card-header">
-                    <div class="gas-title-group">
-                        <div class="gas-formula">CH<sub>4</sub></div>
-                        <span class="card-title">Metano</span>
-                    </div>
-                </div>
-                <div class="card-value">
-                    <span id="val-CH4">--</span>
-                    <span class="gas-unit">PPM</span>
-                </div>
-            </div>
-
-            <!-- 3. C2H5OH -->
-            <div class="card gas-card">
-                <div class="card-header">
-                    <div class="gas-title-group">
-                        <div class="gas-formula">C<sub>2</sub>H<sub>5</sub>OH</div>
-                        <span class="card-title">Etanol / Álcool</span>
-                    </div>
-                </div>
-                <div class="card-value">
-                    <span id="val-C2H5OH">--</span>
-                    <span class="gas-unit">PPM</span>
-                </div>
-            </div>
-
-            <!-- 4. H2 -->
-            <div class="card gas-card">
-                <div class="card-header">
-                    <div class="gas-title-group">
-                        <div class="gas-formula">H<sub>2</sub></div>
-                        <span class="card-title">Hidrogênio</span>
-                    </div>
-                </div>
-                <div class="card-value">
-                    <span id="val-H2">--</span>
-                    <span class="gas-unit">PPM</span>
-                </div>
-            </div>
-
-            <!-- 5. NH3 -->
+            <!-- 1. NH3 (Amônia) -->
             <div class="card gas-card">
                 <div class="card-header">
                     <div class="gas-title-group">
                         <div class="gas-formula">NH<sub>3</sub></div>
                         <span class="card-title">Amônia</span>
                     </div>
+                    <span class="gas-type-tag">Renal</span>
                 </div>
                 <div class="card-value">
                     <span id="val-NH3">--</span>
                     <span class="gas-unit">PPM</span>
                 </div>
+                <div class="card-footer">
+                    <span class="threshold-tag">Ref: ≤ 1.80 PPM</span>
+                </div>
             </div>
 
-            <!-- 6. NO2 -->
+            <!-- 2. C2H5OH / VOC (Etanol / VOC) -->
             <div class="card gas-card">
                 <div class="card-header">
                     <div class="gas-title-group">
-                        <div class="gas-formula">NO<sub>2</sub></div>
-                        <span class="card-title">Dióxido de Nitrogênio</span>
+                        <div class="gas-formula">C<sub>2</sub>H<sub>5</sub>OH</div>
+                        <span class="card-title">Etanol / VOC (Acetona)</span>
                     </div>
+                    <span class="gas-type-tag">Metabólico</span>
                 </div>
                 <div class="card-value">
-                    <span id="val-NO2">--</span>
+                    <span id="val-C2H5OH">--</span>
                     <span class="gas-unit">PPM</span>
+                </div>
+                <div class="card-footer">
+                    <span class="threshold-tag">Ref: ≤ 1.70 PPM</span>
+                </div>
+            </div>
+
+            <!-- 3. H2 (Hidrogênio) -->
+            <div class="card gas-card">
+                <div class="card-header">
+                    <div class="gas-title-group">
+                        <div class="gas-formula">H<sub>2</sub></div>
+                        <span class="card-title">Hidrogênio</span>
+                    </div>
+                    <span class="gas-type-tag">Gastro</span>
+                </div>
+                <div class="card-value">
+                    <span id="val-H2">--</span>
+                    <span class="gas-unit">PPM</span>
+                </div>
+                <div class="card-footer">
+                    <span class="threshold-tag">Ref: ≤ 7.00 PPM</span>
+                </div>
+            </div>
+
+            <!-- 4. CO (Monóxido de Carbono) -->
+            <div class="card gas-card">
+                <div class="card-header">
+                    <div class="gas-title-group">
+                        <div class="gas-formula">CO</div>
+                        <span class="card-title">Monóxido de Carbono</span>
+                    </div>
+                    <span class="gas-type-tag">Oncológico / VOC</span>
+                </div>
+                <div class="card-value">
+                    <span id="val-CO">--</span>
+                    <span class="gas-unit">PPM</span>
+                </div>
+                <div class="card-footer">
+                    <span class="threshold-tag">Ref: ≥ 0.09 PPM</span>
                 </div>
             </div>
         </div>
+
+        <!-- SEÇÃO 2: PADRÕES RESPIRATÓRIOS & DIAGNÓSTICO CLÍNICO -->
+        <div class="section-title-group diagnostic-header-group">
+            <div class="diagnostic-title-left">
+                <h2>Padrões Respiratórios & Triagem Clínica</h2>
+                <span class="section-subtitle">Inferência baseada nas proporções dos biomarcadores expelidos</span>
+            </div>
+            <div class="overall-status-box">
+                <span class="overall-status-label">Status Clínico Geral:</span>
+                <span class="status-pill status-pill-neutral" id="status-geral-badge">Aguardando Teste</span>
+            </div>
+        </div>
+
+        <div class="diagnostic-grid">
+            <!-- 1. Padrão Renal -->
+            <div class="diag-card" id="card-diag-nh3">
+                <div class="diag-card-top">
+                    <div class="diag-icon-wrapper">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                        </svg>
+                    </div>
+                    <div class="diag-header-text">
+                        <h3>Função Renal</h3>
+                        <span>Biomarcador: Amônia (NH<sub>3</sub>)</span>
+                    </div>
+                </div>
+                <div class="diag-card-body">
+                    <div class="diag-status-pill status-pill-neutral" id="diag-nh3">Aguardando Sopro</div>
+                    <p class="diag-desc">Níveis elevados de NH<sub>3</sub> acima de 1.8 PPM no hálito estão correlacionados à sobrecarga renal.</p>
+                </div>
+            </div>
+
+            <!-- 2. Padrão Metabólico / Diabetes -->
+            <div class="diag-card" id="card-diag-c2h5oh">
+                <div class="diag-card-top">
+                    <div class="diag-icon-wrapper">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m19 11-8-8-8.6 8.6a2 2 0 0 0 0 2.8l5.2 5.2c.8.8 2 .8 2.8 0L19 11Z" />
+                            <path d="m5 2 5 5" />
+                            <path d="M2 13h15" />
+                            <path d="M22 20a2 2 0 1 1-4 0c0-1.6 1.7-2.4 2-4 .3 1.6 2 2.4 2 4Z" />
+                        </svg>
+                    </div>
+                    <div class="diag-header-text">
+                        <h3>Cetoacidose / Diabetes</h3>
+                        <span>Biomarcador: VOC / Acetona (C<sub>2</sub>H<sub>5</sub>OH)</span>
+                    </div>
+                </div>
+                <div class="diag-card-body">
+                    <div class="diag-status-pill status-pill-neutral" id="diag-c2h5oh">Aguardando Sopro</div>
+                    <p class="diag-desc">Picos de VOC superiores a 1.7 PPM indicam elevação de corpos cetônicos no ar expirado.</p>
+                </div>
+            </div>
+
+            <!-- 3. Padrão Gastrointestinal / Microbioma -->
+            <div class="diag-card" id="card-diag-h2">
+                <div class="diag-card-top">
+                    <div class="diag-icon-wrapper">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M8 12h8" />
+                            <path d="M12 8v8" />
+                        </svg>
+                    </div>
+                    <div class="diag-header-text">
+                        <h3>Saúde Gastrointestinal</h3>
+                        <span>Biomarcador: Hidrogênio (H<sub>2</sub>)</span>
+                    </div>
+                </div>
+                <div class="diag-card-body">
+                    <div class="diag-status-pill status-pill-neutral" id="diag-h2">Aguardando Sopro</div>
+                    <p class="diag-desc">Valores de H<sub>2</sub> acima de 7.0 PPM apontam para fermentação bacteriana atípica ou disbiose.</p>
+                </div>
+            </div>
+
+            <!-- 4. Padrão Oncológico / Metabólico Geral -->
+            <div class="diag-card" id="card-diag-co">
+                <div class="diag-card-top">
+                    <div class="diag-icon-wrapper">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
+                        </svg>
+                    </div>
+                    <div class="diag-header-text">
+                        <h3>Oncológico / Isopreno</h3>
+                        <span>Biomarcador: Monóxido de Carbono (CO)</span>
+                    </div>
+                </div>
+                <div class="diag-card-body">
+                    <div class="diag-status-pill status-pill-neutral" id="diag-co">Aguardando Sopro</div>
+                    <p class="diag-desc">Níveis residuais de CO anormalmente baixos (&lt;0.09 PPM) correlacionam-se à queda de isopreno celular.</p>
+                </div>
+            </div>
+        </div>
+
     </main>
 
     <script src="script.js"></script>
