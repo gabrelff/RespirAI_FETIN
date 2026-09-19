@@ -210,7 +210,7 @@ function finalizarSessaoCaptura() {
 
 /**
  * Processa a mensagem JSON recebida do ESP32
- * Suporta a estrutura oficial do Projeto2.0.ino
+ * Suporta a estrutura oficial do respirai_firmware.ino
  */
 function processarDadosRecebidos(dados) {
     // 1. Extração dos Dados Brutos (Picos dos gases)
@@ -294,7 +294,7 @@ function atualizarBadgeDiagnostico(elementId, textoStatus) {
 }
 
 /**
- * Lógica de fallback para cálculo local de diagnóstico (idêntica ao Projeto2.0.ino)
+ * Lógica de fallback para cálculo local de diagnóstico (idêntica ao respirai_firmware.ino)
  */
 function calcularDiagnosticoLocal(nh3, c2h5oh, h2, co) {
     let alertaRenal = "Normal";

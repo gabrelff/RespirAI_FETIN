@@ -1,0 +1,19 @@
+# IDE / Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Arduino / Firmware build artifacts
+build/
+*.elf
+*.bin
+*.hex
+
+# Web / Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
