@@ -1,5 +1,5 @@
 /**
- * RespirAR - Monitoramento Respiratório de Gases & Triagem Clínica (ESP32)
+ * RespirAI - Monitoramento Respiratório de Gases & Triagem Clínica (ESP32)
  */
 
 // ==========================================================================
@@ -7,7 +7,7 @@
 // ==========================================================================
 
 const ESP32_IP = window.location.hostname && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1'
-    ? window.location.hostname 
+    ? window.location.hostname
     : '192.168.4.1'; // IP padrão do ESP32 em modo Access Point
 
 const gateway = `ws://${ESP32_IP}:81/`;
@@ -25,24 +25,24 @@ window.addEventListener('load', () => {
 });
 
 function initWebSocket() {
-    console.log(`[RespirAR] Conectando ao ESP32 via WebSocket em: ${gateway}`);
-    
+    console.log(`[RespirAI] Conectando ao ESP32 via WebSocket em: ${gateway}`);
+
     try {
         websocket = new WebSocket(gateway);
 
-        websocket.onopen    = onOpen;
-        websocket.onclose   = onClose;
+        websocket.onopen = onOpen;
+        websocket.onclose = onClose;
         websocket.onmessage = onMessage;
-        websocket.onerror   = onError;
+        websocket.onerror = onError;
     } catch (e) {
-        console.warn('[RespirAR] Falha ao criar WebSocket:', e);
+        console.warn('[RespirAI] Falha ao criar WebSocket:', e);
         setMicrocontrollerStatus(false);
     }
 }
 
 // 1. Quando o ESP32 aceita a conexão
 function onOpen(event) {
-    console.log('[RespirAR] Conectado ao ESP32 com sucesso!');
+    console.log('[RespirAI] Conectado ao ESP32 com sucesso!');
     setMicrocontrollerStatus(true);
 }
 
@@ -54,7 +54,7 @@ function onMessage(event) {
 
     try {
         const payload = JSON.parse(event.data);
-        console.log('[RespirAR] Dados recebidos do ESP32:', payload);
+        console.log('[RespirAI] Dados recebidos do ESP32:', payload);
 
         // Se o teste foi acionado pelo botão físico no ESP32, encerra a animação do frontend
         finalizarSessaoCaptura();
@@ -63,20 +63,20 @@ function onMessage(event) {
         processarDadosRecebidos(payload);
 
     } catch (erro) {
-        console.error('[RespirAR] Erro ao processar JSON do ESP32:', erro, event.data);
+        console.error('[RespirAI] Erro ao processar JSON do ESP32:', erro, event.data);
     }
 }
 
 // 3. Quando a conexão cai
 function onClose(event) {
-    console.log('[RespirAR] Conexão com ESP32 perdida. Tentando reconectar em 2 segundos...');
+    console.log('[RespirAI] Conexão com ESP32 perdida. Tentando reconectar em 2 segundos...');
     setMicrocontrollerStatus(false);
     setTimeout(initWebSocket, 2000);
 }
 
 // 4. Erro de comunicação
 function onError(event) {
-    console.warn('[RespirAR] Erro na comunicação WebSocket com o ESP32.');
+    console.warn('[RespirAI] Erro na comunicação WebSocket com o ESP32.');
     setMicrocontrollerStatus(false);
 }
 
@@ -98,12 +98,12 @@ function iniciarTesteSopro() {
     if (websocket && websocket.readyState === WebSocket.OPEN) {
         try {
             websocket.send('START');
-            console.log('[RespirAR] Comando START enviado via WebSocket.');
+            console.log('[RespirAI] Comando START enviado via WebSocket.');
         } catch (err) {
-            console.warn('[RespirAR] Erro ao enviar comando START:', err);
+            console.warn('[RespirAI] Erro ao enviar comando START:', err);
         }
     } else {
-        console.log('[RespirAR] ESP32 não conectado. Rodando em modo de simulação local.');
+        console.log('[RespirAI] ESP32 não conectado. Rodando em modo de simulação local.');
     }
 
     // Dispara a animação da barra e contagem regressiva de 5 segundos no frontend
@@ -216,10 +216,10 @@ function processarDadosRecebidos(dados) {
     // 1. Extração dos Dados Brutos (Picos dos gases)
     const brutos = dados.DadosBrutos || dados;
 
-    const valNH3    = brutos.NH3 !== undefined ? brutos.NH3 : 0;
+    const valNH3 = brutos.NH3 !== undefined ? brutos.NH3 : 0;
     const valC2H5OH = brutos.VOC_Proxy !== undefined ? brutos.VOC_Proxy : (brutos.C2H5OH !== undefined ? brutos.C2H5OH : 0);
-    const valH2     = brutos.H2 !== undefined ? brutos.H2 : 0;
-    const valCO     = brutos.CO !== undefined ? brutos.CO : 0;
+    const valH2 = brutos.H2 !== undefined ? brutos.H2 : 0;
+    const valCO = brutos.CO !== undefined ? brutos.CO : 0;
 
     atualizarValorGas('NH3', valNH3);
     atualizarValorGas('C2H5OH', valC2H5OH);

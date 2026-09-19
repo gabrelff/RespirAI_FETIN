@@ -1,5 +1,5 @@
 /* ==========================================================================
-   RespirAR - Estilos Gerais e Design System
+   RespirAI - Estilos Gerais e Design System
    ========================================================================== */
 * {
     margin: 0;
@@ -14,26 +14,26 @@
     --bg-card-subtle: #141e33;
     --border-color: #1e293b;
     --border-subtle: #2d3b59;
-    
+
     --text-primary: #ffffff;
     --text-secondary: #94a3b8;
     --text-muted: #64748b;
-    
+
     --accent-blue: #3b82f6;
     --accent-blue-hover: #2563eb;
     --accent-cyan: #38bdf8;
-    
+
     --status-online: #10b981;
     --status-offline: #ef4444;
-    
+
     --pill-normal-bg: rgba(16, 185, 129, 0.15);
     --pill-normal-border: #10b981;
     --pill-normal-text: #34d399;
-    
+
     --pill-warning-bg: rgba(245, 158, 11, 0.15);
     --pill-warning-border: #f59e0b;
     --pill-warning-text: #fbbf24;
-    
+
     --pill-danger-bg: rgba(239, 68, 68, 0.15);
     --pill-danger-border: #ef4444;
     --pill-danger-text: #f87171;
@@ -315,8 +315,15 @@ body {
 }
 
 @keyframes pulseBlink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
 }
 
 .test-control-right {
@@ -579,7 +586,8 @@ body {
 }
 
 /* Status Pills (Tags Coloridas de Diagnóstico) */
-.diag-status-pill, .status-pill {
+.diag-status-pill,
+.status-pill {
     display: inline-flex;
     align-items: center;
     justify-content: center;
