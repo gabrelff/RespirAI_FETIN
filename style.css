@@ -94,6 +94,41 @@ body {
     letter-spacing: -0.5px;
 }
 
+.topbar-center {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.topbar-timer-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border-color);
+    padding: 6px 14px;
+    border-radius: 9999px;
+}
+
+.topbar-timer-group .timer-label {
+    font-size: 13px;
+    color: var(--text-secondary);
+    white-space: nowrap;
+}
+
+.topbar-timer-group .progress-bar-container {
+    width: 120px;
+    height: 8px;
+}
+
+.topbar-timer-group .timer-value {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--accent-cyan);
+    font-variant-numeric: tabular-nums;
+    min-width: 36px;
+}
+
 .topbar-right {
     display: flex;
     align-items: center;
@@ -188,58 +223,22 @@ body {
     flex: 1;
 }
 
-.header {
-    margin-bottom: 24px;
-}
-
-.header h1 {
-    font-size: 30px;
-    margin-bottom: 6px;
-    font-weight: 700;
-    color: var(--text-primary);
-    letter-spacing: -0.5px;
-}
-
-.header p {
-    color: var(--text-muted);
-    font-size: 13px;
-    letter-spacing: 1.5px;
-}
-
-/* CARD DE CONTROLE DE TESTE (BOTÃO START & TIMER) */
-.test-control-card {
-    background-color: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 14px;
-    padding: 22px 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 32px;
-    margin-bottom: 36px;
-}
-
-.test-control-left {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    min-width: 320px;
-}
-
+/* CONTROLE DE TESTE NA TOPBAR (BOTÃO START & TIMER) */
 .btn-start {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 12px;
+    gap: 10px;
     background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
     color: #ffffff;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
-    padding: 14px 24px;
-    border-radius: 10px;
+    padding: 8px 18px;
+    border-radius: 9999px;
     border: none;
     cursor: pointer;
     user-select: none;
+    white-space: nowrap;
 }
 
 .btn-start:hover:not(:disabled) {
@@ -582,7 +581,16 @@ body {
 
 @media (max-width: 768px) {
     .topbar {
-        padding: 0 16px;
+        padding: 0 12px;
+        gap: 8px;
+    }
+
+    .topbar-timer-group .timer-label {
+        display: none;
+    }
+
+    .topbar-timer-group .progress-bar-container {
+        width: 80px;
     }
 
     .main-content {
