@@ -259,54 +259,6 @@ body {
     flex-shrink: 0;
 }
 
-.test-status-info {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 13px;
-}
-
-.status-label {
-    color: var(--text-muted);
-}
-
-.status-badge {
-    padding: 3px 10px;
-    border-radius: 6px;
-    font-weight: 600;
-    font-size: 12px;
-}
-
-.status-badge.status-idle {
-    background: rgba(255, 255, 255, 0.06);
-    color: var(--text-secondary);
-    border: 1px solid var(--border-color);
-}
-
-.status-badge.status-blowing {
-    background: rgba(56, 189, 248, 0.15);
-    color: var(--accent-cyan);
-    border: 1px solid rgba(56, 189, 248, 0.4);
-    animation: pulseBlink 1.2s infinite ease-in-out;
-}
-
-.status-badge.status-done {
-    background: var(--pill-normal-bg);
-    color: var(--pill-normal-text);
-    border: 1px solid var(--pill-normal-border);
-}
-
-@keyframes pulseBlink {
-
-    0%,
-    100% {
-        opacity: 1;
-    }
-
-    50% {
-        opacity: 0.5;
-    }
-}
 
 .test-control-right {
     flex: 1;

@@ -128,27 +128,14 @@ function iniciarTesteSopro() {
                     gerarLeituraSimulada();
                     finalizarSessaoCaptura();
                 }, 300);
-            } else {
-                // Aguarda o JSON final do ESP32
-                const statusBadge = document.getElementById('test-status-badge');
-                if (statusBadge) {
-                    statusBadge.className = 'status-badge status-idle';
-                    statusBadge.textContent = 'Processando análise...';
-                }
             }
         }
     }, 50);
 }
 
 function atualizarUIParaCapturando() {
-    const statusBadge = document.getElementById('test-status-badge');
     const hintElem = document.getElementById('test-hint');
     const progressFill = document.getElementById('progress-bar-fill');
-
-    if (statusBadge) {
-        statusBadge.className = 'status-badge status-blowing';
-        statusBadge.textContent = 'Soprando no sensor (5s)...';
-    }
 
     if (hintElem) {
         hintElem.textContent = 'Mantenha um sopro contínuo e firme no bocal até o término do cronômetro.';
@@ -173,7 +160,6 @@ function finalizarSessaoCaptura() {
     }
 
     const btnStart = document.getElementById('btn-start');
-    const statusBadge = document.getElementById('test-status-badge');
     const timerElem = document.getElementById('timer-countdown');
     const hintElem = document.getElementById('test-hint');
     const progressFill = document.getElementById('progress-bar-fill');
@@ -181,11 +167,6 @@ function finalizarSessaoCaptura() {
     if (btnStart) btnStart.disabled = false;
     if (timerElem) timerElem.textContent = '5.0s';
     if (progressFill) progressFill.style.width = '100%';
-
-    if (statusBadge) {
-        statusBadge.className = 'status-badge status-done';
-        statusBadge.textContent = 'Leitura Concluída';
-    }
 
     if (hintElem) {
         hintElem.textContent = 'Teste concluído! Os resultados e a triagem diagnóstica foram atualizados abaixo.';
