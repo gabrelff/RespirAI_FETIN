@@ -1,6 +1,4 @@
-// ==========================================================================
 // 1. CONFIGURAÇÃO E GERENCIAMENTO DO WEBSOCKET
-// ==========================================================================
 
 const ESP32_IP = window.location.hostname && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1'
     ? window.location.hostname
@@ -76,10 +74,7 @@ function onError(event) {
     setMicrocontrollerStatus(false);
 }
 
-
-// ==========================================================================
 // 2. CONTROLE DO TESTE DE SOPRO (BOTÃO START & CRONÔMETRO)
-// ==========================================================================
 
 // Disparado ao clicar no botão "Iniciar Teste de Sopro"
 function iniciarTesteSopro() {
@@ -197,10 +192,7 @@ function finalizarSessaoCaptura() {
     }
 }
 
-
-// ==========================================================================
 // 3. PROCESSAMENTO DE DADOS & DIAGNÓSTICO CLÍNICO
-// ==========================================================================
 
 // Processa a mensagem JSON recebida do ESP32
 // Suporta a estrutura oficial do respirai_firmware.ino
@@ -307,10 +299,7 @@ function calcularDiagnosticoLocal(nh3, c2h5oh, h2, co) {
     };
 }
 
-
-// ==========================================================================
 // 4. STATUS DO ESP32 & MODO DE SIMULAÇÃO LOCAL
-// ==========================================================================
 
 function setMicrocontrollerStatus(online) {
     isMicrocontrollerOnline = !!online;

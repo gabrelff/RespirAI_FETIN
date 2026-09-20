@@ -203,22 +203,20 @@ body {
 .header p {
     color: var(--text-muted);
     font-size: 13px;
-    text-transform: uppercase;
     letter-spacing: 1.5px;
 }
 
 /* CARD DE CONTROLE DE TESTE (BOTÃO START & TIMER) */
 .test-control-card {
-    background: linear-gradient(145deg, #111a2f 0%, #0d1424 100%);
-    border: 1px solid var(--border-subtle);
-    border-radius: 16px;
-    padding: 24px 28px;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 22px 24px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 32px;
     margin-bottom: 36px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
 }
 
 .test-control-left {
@@ -241,21 +239,14 @@ body {
     border-radius: 10px;
     border: none;
     cursor: pointer;
-    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
-    transition: all 0.2s ease;
     user-select: none;
 }
 
 .btn-start:hover:not(:disabled) {
     background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.6);
-    transform: translateY(-1px);
 }
 
-.btn-start:active:not(:disabled) {
-    transform: translateY(1px);
-}
-
+.btn-start:active:not(:disabled),
 .btn-start:disabled {
     background: #1e293b;
     color: var(--text-muted);
@@ -371,13 +362,13 @@ body {
 }
 
 .section-title-group h2 {
-    font-size: 18px;
     font-weight: 600;
     color: var(--text-primary);
     margin-bottom: 2px;
 }
 
 .section-subtitle {
+    letter-spacing: 1.5px;
     font-size: 13px;
     color: var(--text-muted);
 }
@@ -547,14 +538,14 @@ body {
 }
 
 .diag-header-text h3 {
-    font-size: 16px;
+    font-size: 25px;
     font-weight: 600;
     color: var(--text-primary);
     margin-bottom: 2px;
 }
 
 .diag-header-text span {
-    font-size: 12px;
+    font-size: 15px;
     color: var(--text-muted);
 }
 
@@ -565,7 +556,7 @@ body {
 }
 
 .diag-desc {
-    font-size: 13px;
+    font-size: 14px;
     color: var(--text-secondary);
     line-height: 1.4;
 }
